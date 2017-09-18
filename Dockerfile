@@ -28,9 +28,8 @@ RUN apk add --no-cache --virtual .build-utils gcc g++ make git pkgconfig perl \
     # write a little script to handle empty extra modules
     echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install && \ 
     # Enable GNUtls with SHA256 fingerprints
-    apk add --no-cache --virtual sqlite-dev && \
-    ./configure --enable-extras=m_sqlite3.cpp $CONFIGUREARGS && \
-    ./configure --enable-extras=m_ssl_gnutls.cpp $CONFIGUREARGS && \
+    apk add --no-cache mariadb-dev && \
+    ./configure --enable-extras=m_ssl_gnutls.cpp,m_mysql.cpp $CONFIGUREARGS && \
     ./configure --disable-interactive --prefix=/inspircd/ --uid 10000  \
         --with-cc='c++ -DINSPIRCD_GNUTLS_ENABLE_SHA256_FINGERPRINT' && \
     # Run build multi-threaded
